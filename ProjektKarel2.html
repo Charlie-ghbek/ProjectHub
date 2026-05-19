@@ -196,6 +196,83 @@
             box-shadow: 0 8px 24px rgba(0,0,0,0.25);
         }
 
+        .hero {
+            background: #162027;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 12px 34px rgba(0,0,0,0.35);
+            margin-bottom: 30px;
+        }
+
+        .hero h2 {
+            color: #4dd0e1;
+            margin-bottom: 16px;
+            font-size: 32px;
+        }
+
+        .hero p {
+            color: #cfecee;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            max-width: 860px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .leaderboard-section {
+            background: #1d252c;
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 0 12px 34px rgba(0,0,0,0.25);
+        }
+
+        .leaderboard-section h2 {
+            margin-bottom: 16px;
+            color: #e1f7f5;
+        }
+
+        .leaderboard-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 16px;
+        }
+
+        .leaderboard-table th,
+        .leaderboard-table td {
+            border: 1px solid #2f383f;
+            padding: 14px 12px;
+            text-align: left;
+        }
+
+        .leaderboard-table th {
+            background: #131b21;
+            color: #8be3da;
+        }
+
+        .leaderboard-table td {
+            color: #d4f2ee;
+        }
+
+        .report-hint {
+            color: #b0d8d5;
+            font-size: 14px;
+        }
+
+        .badge-reported {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(255, 85, 85, 0.15);
+            color: #ff8f8f;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
         .filters select {
             padding: 12px 15px;
             border: 1px solid #2f383f;
@@ -440,10 +517,49 @@
     <nav>
         <h1>🚀 ProjectHub</h1>
         <div class="buttons">
-            <button class="btn-secondary btn-small" onclick="showView('browse')">Browse</button>
+            <button class="btn-secondary btn-small" onclick="showView('home')">Úvod</button>
+            <button class="btn-secondary btn-small" onclick="showView('browse')">Projekty</button>
             <button class="btn-primary btn-small" onclick="openAddProjectModal()">+ Nový projekt</button>
         </div>
     </nav>
+
+    <!-- HOME VIEW -->
+    <div id="homeView" class="view">
+        <section class="hero">
+            <h2>Vítej v ProjectHub</h2>
+            <p>Platforma pro sdílení projektů, hledání pomoci a navrhování nápadů. Pomoz si navzájem, najdi spolupracovníky a bezpečně nahlas nevhodné příspěvky.</p>
+            <div class="hero-buttons">
+                <button class="btn-primary btn-small" onclick="showView('browse')">Procházet projekty</button>
+                <button class="btn-secondary btn-small" onclick="openAddProjectModal()">Vytvořit projekt</button>
+            </div>
+        </section>
+
+        <section class="leaderboard-section">
+            <h2>Statistiky členů</h2>
+            <table class="leaderboard-table">
+                <thead>
+                    <tr>
+                        <th>Role</th>
+                        <th>Autor</th>
+                        <th>Počet</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Kdo nejvíc pomohl</td>
+                        <td id="topHelperName">-</td>
+                        <td id="topHelperCount">0</td>
+                    </tr>
+                    <tr>
+                        <td>Kdo nejvíc potřeboval pomoc</td>
+                        <td id="topNeederName">-</td>
+                        <td id="topNeederCount">0</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="report-hint">Pokud vidíš hloupé nebo sprosté texty, použij tlačítko „Nahlásit“ v detailech projektu.</p>
+        </section>
+    </div>
 
     <!-- BROWSE VIEW -->
     <div id="browseView" class="view">
@@ -625,9 +741,10 @@
                     author: "Pavel",
                     contact: "pavel@example.com",
                     createdAt: new Date().toLocaleDateString('cs-CZ'),
+                    reported: false,
                     ideas: [
-                        { id: 1, title: "Přidat dark mode", desc: "Implementovat tmavý motiv", author: "Jana", upvotes: 42 },
-                        { id: 2, title: "Emoji supporta", desc: "Přidat možnost psát emoji", author: "Petr", upvotes: 28 }
+                        { id: 1, title: "Přidat dark mode", desc: "Implementovat tmavý motiv", author: "Jana", upvotes: 42, reported: false },
+                        { id: 2, title: "Emoji supporta", desc: "Přidat možnost psát emoji", author: "Petr", upvotes: 28, reported: false }
                     ]
                 },
                 {
@@ -640,8 +757,9 @@
                     author: "Markéta",
                     contact: "marketa@example.com",
                     createdAt: new Date().toLocaleDateString('cs-CZ'),
+                    reported: false,
                     ideas: [
-                        { id: 1, title: "Animované najetí", desc: "Přidat smooth animace", author: "Michal", upvotes: 15 }
+                        { id: 1, title: "Animované najetí", desc: "Přidat smooth animace", author: "Michal", upvotes: 15, reported: false }
                     ]
                 },
                 {
@@ -654,6 +772,7 @@
                     author: "Tomáš",
                     contact: "tomas@example.com",
                     createdAt: new Date().toLocaleDateString('cs-CZ'),
+                    reported: false,
                     ideas: []
                 }
             ];
@@ -696,6 +815,7 @@
                             <span class="project-category">${getCategoryEmoji(project.category)} ${getCategoryName(project.category)}</span>
                             <span class="project-difficulty difficulty-${project.difficulty}">${getDifficultyName(project.difficulty)}</span>
                         </div>
+                        ${project.reported ? '<div class="badge-reported" style="margin-top: 8px;">Nahlášeno</div>' : ''}
                     </div>
                 </div>
                 <p>${project.description.substring(0, 100)}...</p>
@@ -728,8 +848,11 @@
                         <span>👤 ${project.author}</span>
                         <span>📧 ${project.contact}</span>
                         <span>📅 ${project.createdAt}</span>
+                        ${project.reported ? '<span class="badge-reported">Nahlášeno</span>' : ''}
                     </div>
                 </div>
+
+                <button class="btn-secondary btn-small" style="margin-bottom: 20px;" onclick="reportProject(${project.id})">Nahlásit projekt</button>
 
                 <h2>Popis</h2>
                 <p>${project.description}</p>
@@ -755,9 +878,12 @@
                                     <div>
                                         <div class="idea-title">${idea.title}</div>
                                         <div class="idea-description">${idea.desc}</div>
-                                        <div class="idea-author">💬 ${idea.author}</div>
+                                        <div class="idea-author">💬 ${idea.author}${idea.reported ? ' <span class="badge-reported">Nahlášeno</span>' : ''}</div>
                                     </div>
-                                    <button class="btn-upvote" onclick="upvoteIdea(${project.id}, ${idea.id})">⬆️ ${idea.upvotes}</button>
+                                    <div style="display: flex; flex-direction: column; gap: 8px; align-items: flex-end;">
+                                        <button class="btn-upvote" onclick="upvoteIdea(${project.id}, ${idea.id})">⬆️ ${idea.upvotes}</button>
+                                        <button class="btn-secondary btn-small" onclick="reportIdea(${project.id}, ${idea.id})">Nahlásit</button>
+                                    </div>
                                 </div>
                             </div>
                         `).join('')}
@@ -772,9 +898,17 @@
     }
 
     function showView(viewName) {
+        document.getElementById('homeView').style.display = viewName === 'home' ? 'block' : 'none';
         document.getElementById('browseView').style.display = viewName === 'browse' ? 'block' : 'none';
         document.getElementById('detailView').style.display = viewName === 'detail' ? 'block' : 'none';
-        if (viewName === 'browse') renderProjects();
+
+        if (viewName === 'browse') {
+            renderProjects();
+        }
+
+        if (viewName === 'home') {
+            renderHomeStats();
+        }
     }
 
     function filterProjects() {
@@ -799,24 +933,43 @@
     function addProject(e) {
         e.preventDefault();
 
-        const categoryInput = document.getElementById('projectCategory').value.trim();
-        const categoryValue = normalizeCategoryInput(categoryInput);
+        const projectName = document.getElementById('projectName').value;
+        const projectDesc = document.getElementById('projectDesc').value;
+        const projectCategory = document.getElementById('projectCategory').value.trim();
+        const projectDifficulty = document.getElementById('projectDifficulty').value;
+        const projectNeeds = document.getElementById('projectNeeds').value;
+        const projectAuthor = document.getElementById('projectAuthor').value;
+        const projectContact = document.getElementById('projectContact').value;
+        const categoryValue = normalizeCategoryInput(projectCategory);
 
         if (!categoryValue) {
             alert('Prosím vyber nebo zadej kategorii.');
             return;
         }
 
+        const validationError = getValidationError([
+            { value: projectName, label: 'Název projektu' },
+            { value: projectDesc, label: 'Popis projektu' },
+            { value: projectNeeds, label: 'Popis pomoci' },
+            { value: projectAuthor, label: 'Jméno autora' }
+        ]);
+
+        if (validationError) {
+            alert('Nelze odeslat: ' + validationError);
+            return;
+        }
+
         const newProject = {
             id: Math.max(...projects.map(p => p.id), 0) + 1,
-            name: document.getElementById('projectName').value,
-            description: document.getElementById('projectDesc').value,
+            name: projectName,
+            description: projectDesc,
             category: categoryValue,
-            difficulty: document.getElementById('projectDifficulty').value,
-            needs: document.getElementById('projectNeeds').value.split(',').map(n => n.trim()),
-            author: document.getElementById('projectAuthor').value,
-            contact: document.getElementById('projectContact').value,
+            difficulty: projectDifficulty,
+            needs: projectNeeds.split(',').map(n => n.trim()),
+            author: projectAuthor,
+            contact: projectContact,
             createdAt: new Date().toLocaleDateString('cs-CZ'),
+            reported: false,
             ideas: []
         };
 
@@ -834,12 +987,28 @@
         const project = projects.find(p => p.id === currentProjectId);
         if (!project) return;
 
+        const ideaTitle = document.getElementById('ideaTitle').value;
+        const ideaDesc = document.getElementById('ideaDesc').value;
+        const ideaAuthor = document.getElementById('ideaAuthor').value;
+
+        const validationError = getValidationError([
+            { value: ideaTitle, label: 'Název nápadu' },
+            { value: ideaDesc, label: 'Popis nápadu' },
+            { value: ideaAuthor, label: 'Jméno autora' }
+        ]);
+
+        if (validationError) {
+            alert('Nelze odeslat: ' + validationError);
+            return;
+        }
+
         const newIdea = {
             id: Math.max(...project.ideas.map(i => i.id), 0) + 1,
-            title: document.getElementById('ideaTitle').value,
-            desc: document.getElementById('ideaDesc').value,
-            author: document.getElementById('ideaAuthor').value,
-            upvotes: 0
+            title: ideaTitle,
+            desc: ideaDesc,
+            author: ideaAuthor,
+            upvotes: 0,
+            reported: false
         };
 
         project.ideas.push(newIdea);
@@ -860,6 +1029,78 @@
         idea.upvotes++;
         saveData();
         showProjectDetail(projectId);
+    }
+
+    function getValidationError(fields) {
+        const forbiddenWords = ['blbost', 'sprostý', 'sprosta', 'sprosty', 'kurva', 'hovno', 'pizda', 'idiot', 'debil', 'čurák', 'shit', 'fuck', 'bitch'];
+        const normalize = text => (text || '').toString().trim().toLowerCase();
+        for (const { value, label } of fields) {
+            const normalized = normalize(value);
+            if (!normalized) {
+                return `${label} nesmí být prázdné.`;
+            }
+            if (normalized.length < 3) {
+                return `${label} je příliš krátké.`;
+            }
+            if (forbiddenWords.some(word => normalized.includes(word))) {
+                return `${label} obsahuje nevhodné slovo.`;
+            }
+            if (/^[^a-z0-9ěščřžýáíéóúůěščřžýáíéóú ,.!?]+$/.test(normalized)) {
+                return `${label} vypadá jako nesmysl.`;
+            }
+        }
+        return '';
+    }
+
+    function reportProject(projectId) {
+        const project = projects.find(p => p.id === projectId);
+        if (!project) return;
+        project.reported = true;
+        saveData();
+        showProjectDetail(projectId);
+        alert('✅ Projekt byl nahlášen k kontrole.');
+    }
+
+    function reportIdea(projectId, ideaId) {
+        const project = projects.find(p => p.id === projectId);
+        if (!project) return;
+        const idea = project.ideas.find(i => i.id === ideaId);
+        if (!idea) return;
+        idea.reported = true;
+        saveData();
+        showProjectDetail(projectId);
+        alert('✅ Nápad byl nahlášen k kontrole.');
+    }
+
+    function renderHomeStats() {
+        const helper = getTopHelper();
+        const needer = getTopNeeder();
+        document.getElementById('topHelperName').textContent = helper.name;
+        document.getElementById('topHelperCount').textContent = helper.count;
+        document.getElementById('topNeederName').textContent = needer.name;
+        document.getElementById('topNeederCount').textContent = needer.count;
+    }
+
+    function getTopHelper() {
+        const summary = {};
+        projects.forEach(project => {
+            project.ideas.forEach(idea => {
+                const author = idea.author || 'Neznámý';
+                summary[author] = (summary[author] || 0) + 1 + idea.upvotes * 0.1;
+            });
+        });
+        const best = Object.entries(summary).sort(([, a], [, b]) => b - a)[0];
+        return best ? { name: best[0], count: Math.round(best[1] * 10) / 10 } : { name: '-', count: 0 };
+    }
+
+    function getTopNeeder() {
+        const summary = {};
+        projects.forEach(project => {
+            const author = project.author || 'Neznámý';
+            summary[author] = (summary[author] || 0) + 1;
+        });
+        const best = Object.entries(summary).sort(([, a], [, b]) => b - a)[0];
+        return best ? { name: best[0], count: best[1] } : { name: '-', count: 0 };
     }
 
     // ============= HELPERS =============
@@ -896,7 +1137,7 @@
 
     // ============= INIT =============
     loadData();
-    renderProjects();
+    showView('home');
 </script>
 
 </body>
