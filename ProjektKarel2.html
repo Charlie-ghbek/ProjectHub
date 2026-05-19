@@ -12,33 +12,57 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #101216 0%, #1c2229 100%);
-            color: #e1f7f5;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, #0f0e2e 0%, #1a1a3e 25%, #0d2b4d 50%, #1a1a3e 75%, #0f0e2e 100%);
+            color: #e0e7ff;
             min-height: 100vh;
-            padding: 20px;
+            padding: 24px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(168, 85, 247, 0.08), transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.08), transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(99, 102, 241, 0.06), transparent 50%);
+            mix-blend-mode: screen;
+            z-index: 0;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1300px;
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
 
         /* NAVBAR */
         nav {
-            background: #181b21;
-            padding: 20px;
-            border-radius: 14px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            background: rgba(15, 12, 46, 0.7);
+            padding: 18px 28px;
+            border-radius: 18px;
+            margin-bottom: 32px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border: 1px solid rgba(168, 85, 247, 0.15);
+            backdrop-filter: blur(20px);
         }
 
         nav h1 {
-            color: #4dd0e1;
-            font-size: 24px;
+            background: linear-gradient(135deg, #a78bfa, #60a5fa, #34d399);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
         }
 
         nav .buttons {
@@ -47,50 +71,88 @@
         }
 
         button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
+            padding: 11px 24px;
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 10px;
             cursor: pointer;
             font-size: 14px;
-            transition: all 0.25s ease;
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(99, 102, 241, 0.08);
+            color: #e0e7ff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(99, 102, 241, 0.25);
+            border-color: rgba(168, 85, 247, 0.4);
+        }
+
+        button:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+            transform: none;
         }
 
         .btn-primary {
-            background: #1abc9c;
-            color: #081010;
+            background: linear-gradient(135deg, #a78bfa, #8b5cf6);
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 8px 24px rgba(168, 85, 247, 0.3);
         }
 
         .btn-primary:hover {
-            background: #16a086;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 18px rgba(26, 188, 156, 0.35);
+            background: linear-gradient(135deg, #c4b5fd, #a78bfa);
+            box-shadow: 0 12px 32px rgba(168, 85, 247, 0.4);
         }
 
         .btn-secondary {
-            background: #23282f;
-            color: #cfd8dc;
+            background: rgba(226, 232, 240, 0.08);
+            color: #cbd5e1;
+            border-color: rgba(226, 232, 240, 0.15);
         }
 
         .btn-secondary:hover {
-            background: #2f3740;
+            background: rgba(226, 232, 240, 0.12);
+            border-color: rgba(226, 232, 240, 0.25);
         }
 
         .btn-small {
-            padding: 8px 12px;
-            font-size: 12px;
+            padding: 8px 16px;
+            font-size: 13px;
         }
 
         .btn-upvote {
-            background: #f0f0f0;
-            color: #667eea;
-            border: 1px solid #667eea;
-            padding: 5px 10px;
-            font-size: 12px;
+            background: rgba(168, 85, 247, 0.12);
+            color: #c4b5fd;
+            border: 1px solid rgba(168, 85, 247, 0.4);
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.25s ease;
         }
 
-        .btn-upvote:hover {
-            background: #667eea;
-            color: white;
+        .btn-upvote:hover:not(:disabled) {
+            background: #a78bfa;
+            color: #fff;
+            border-color: #a78bfa;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(168, 85, 247, 0.3);
+        }
+
+        .btn-upvote.disabled,
+        .btn-upvote:disabled {
+            background: rgba(100, 116, 139, 0.1);
+            color: #94a3b8;
+            border-color: rgba(100, 116, 139, 0.2);
+            cursor: not-allowed;
+            opacity: 0.7;
         }
 
         /* MODALS */
@@ -112,19 +174,23 @@
         }
 
         .modal-content {
-            background: #1e252c;
-            padding: 30px;
-            border-radius: 10px;
-            max-width: 500px;
+            background: rgba(17, 24, 48, 0.9);
+            padding: 32px;
+            border-radius: 20px;
+            max-width: 540px;
             width: 90%;
-            max-height: 90vh;
+            max-height: 88vh;
             overflow-y: auto;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.45);
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(168, 85, 247, 0.12);
+            backdrop-filter: blur(24px);
         }
 
         .modal-content h2 {
-            margin-bottom: 20px;
-            color: #e1f7f5;
+            margin-bottom: 24px;
+            color: #f1f5f9;
+            font-size: 20px;
+            font-weight: 700;
         }
 
         .form-group {
@@ -133,22 +199,25 @@
 
         .form-group label {
             display: block;
-            margin-bottom: 5px;
-            color: #b2f7f1;
-            font-weight: 500;
+            margin-bottom: 8px;
+            color: #cbd5e1;
+            font-weight: 600;
+            font-size: 14px;
         }
 
         .form-group input,
         .form-group textarea,
         .form-group select {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #2f383f;
-            border-radius: 6px;
+            padding: 12px 14px;
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 10px;
             font-family: inherit;
             font-size: 14px;
-            background: #161b20;
-            color: #e1f7f5;
+            background: rgba(15, 23, 42, 0.5);
+            color: #e0e7ff;
+            backdrop-filter: blur(10px);
+            transition: all 0.2s ease;
         }
 
         .form-group textarea {
@@ -158,15 +227,16 @@
 
         .form-group input::placeholder,
         .form-group textarea::placeholder {
-            color: #7a8b92;
+            color: #64748b;
         }
 
         .form-group input:focus,
         .form-group textarea:focus,
         .form-group select:focus {
             outline: none;
-            border-color: #1abc9c;
-            box-shadow: 0 0 0 3px rgba(26, 188, 156, 0.15);
+            border-color: #a78bfa;
+            box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.1);
+            background: rgba(15, 23, 42, 0.8);
         }
 
         .modal-buttons {
@@ -186,216 +256,256 @@
 
         /* FILTERS */
         .filters {
-            background: #1d252c;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 30px;
+            background: rgba(99, 102, 241, 0.05);
+            padding: 20px 24px;
+            border-radius: 16px;
+            margin-bottom: 32px;
             display: flex;
-            gap: 10px;
+            gap: 14px;
             flex-wrap: wrap;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(168, 85, 247, 0.12);
+            backdrop-filter: blur(16px);
+        }
+
+        .filters select {
+            padding: 10px 14px;
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 10px;
+            background: rgba(15, 23, 42, 0.6);
+            color: #e0e7ff;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .filters select:hover {
+            border-color: rgba(168, 85, 247, 0.4);
+        }
+
+        .filters select:focus {
+            outline: none;
+            border-color: #a78bfa;
+            box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.1);
         }
 
         .hero {
-            background: #162027;
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 12px 34px rgba(0,0,0,0.35);
-            margin-bottom: 30px;
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(59, 130, 246, 0.08));
+            padding: 40px 44px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            margin-bottom: 32px;
+            border: 1px solid rgba(168, 85, 247, 0.18);
+            backdrop-filter: blur(20px);
         }
 
         .hero h2 {
-            color: #4dd0e1;
-            margin-bottom: 16px;
-            font-size: 32px;
+            background: linear-gradient(135deg, #c4b5fd, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 18px;
+            font-size: 36px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
         }
 
         .hero p {
-            color: #cfecee;
+            color: #cbd5e1;
             line-height: 1.8;
-            margin-bottom: 20px;
-            max-width: 860px;
+            margin-bottom: 24px;
+            max-width: 900px;
+            font-size: 15px;
         }
 
         .hero-buttons {
             display: flex;
-            gap: 12px;
+            gap: 14px;
             flex-wrap: wrap;
         }
 
         .leaderboard-section {
-            background: #1d252c;
-            padding: 24px;
-            border-radius: 16px;
-            box-shadow: 0 12px 34px rgba(0,0,0,0.25);
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(168, 85, 247, 0.06));
+            padding: 28px 32px;
+            border-radius: 20px;
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(168, 85, 247, 0.12);
+            backdrop-filter: blur(16px);
         }
 
         .leaderboard-section h2 {
-            margin-bottom: 16px;
-            color: #e1f7f5;
+            margin-bottom: 20px;
+            color: #f1f5f9;
+            font-size: 18px;
+            font-weight: 700;
         }
 
         .leaderboard-table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 16px;
+            margin-bottom: 18px;
         }
 
         .leaderboard-table th,
         .leaderboard-table td {
-            border: 1px solid #2f383f;
-            padding: 14px 12px;
+            border: 1px solid rgba(168, 85, 247, 0.15);
+            padding: 14px 16px;
             text-align: left;
+            font-size: 14px;
         }
 
         .leaderboard-table th {
-            background: #131b21;
-            color: #8be3da;
+            background: rgba(168, 85, 247, 0.1);
+            color: #c4b5fd;
+            font-weight: 700;
         }
 
         .leaderboard-table td {
-            color: #d4f2ee;
+            color: #cbd5e1;
+            background: rgba(15, 23, 42, 0.3);
         }
 
         .report-hint {
-            color: #b0d8d5;
-            font-size: 14px;
+            color: #a8a29e;
+            font-size: 13px;
+            line-height: 1.6;
         }
 
         .badge-reported {
             display: inline-block;
-            padding: 4px 10px;
+            padding: 5px 12px;
             border-radius: 999px;
-            background: rgba(255, 85, 85, 0.15);
-            color: #ff8f8f;
+            background: rgba(239, 68, 68, 0.15);
+            color: #fca5a5;
             font-size: 12px;
-            font-weight: 600;
+            font-weight: 700;
             margin-left: 10px;
-        }
-
-        .filters select {
-            padding: 12px 15px;
-            border: 1px solid #2f383f;
-            border-radius: 8px;
-            background: #161b20;
-            color: #e1f7f5;
-            cursor: pointer;
-            font-size: 14px;
         }
 
         /* PROJECTS GRID */
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
         }
 
         .project-card {
-            background: #1e262f;
-            border-radius: 16px;
-            padding: 22px;
-            box-shadow: 0 16px 40px rgba(0,0,0,0.25);
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(168, 85, 247, 0.05));
+            border-radius: 20px;
+            padding: 26px;
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.2);
             cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border-left: 5px solid #1abc9c;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 1px solid rgba(168, 85, 247, 0.15);
+            backdrop-filter: blur(12px);
         }
 
         .project-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+            transform: translateY(-6px) scale(1.01);
+            box-shadow: 0 20px 50px rgba(168, 85, 247, 0.25);
+            border-color: rgba(168, 85, 247, 0.3);
         }
 
         .project-header {
             display: flex;
             justify-content: space-between;
             align-items: start;
-            margin-bottom: 14px;
+            margin-bottom: 16px;
         }
 
         .project-card h3 {
-            color: #e5fbf8;
-            margin-bottom: 5px;
+            color: #f1f5f9;
+            margin-bottom: 8px;
+            font-size: 17px;
+            font-weight: 700;
         }
 
         .project-category {
             display: inline-block;
-            background: #1abc9c;
-            color: #081010;
-            padding: 4px 10px;
+            background: linear-gradient(135deg, #a78bfa, #8b5cf6);
+            color: #fff;
+            padding: 5px 12px;
             border-radius: 20px;
             font-size: 12px;
-            font-weight: 500;
+            font-weight: 700;
         }
 
         .project-difficulty {
             display: inline-block;
-            padding: 4px 10px;
+            padding: 5px 12px;
             border-radius: 20px;
             font-size: 12px;
-            margin-left: 5px;
+            margin-left: 6px;
+            font-weight: 600;
         }
 
         .difficulty-easy {
-            background: #d4edda;
-            color: #155724;
+            background: rgba(34, 197, 94, 0.15);
+            color: #86efac;
         }
 
         .difficulty-medium {
-            background: #fff3cd;
-            color: #856404;
+            background: rgba(251, 146, 60, 0.15);
+            color: #fdba74;
         }
 
         .difficulty-hard {
-            background: #f8d7da;
-            color: #721c24;
+            background: rgba(239, 68, 68, 0.15);
+            color: #fca5a5;
         }
 
         .project-card p {
-            color: #666;
-            margin-bottom: 15px;
-            line-height: 1.5;
+            color: #cbd5e1;
+            margin-bottom: 16px;
+            line-height: 1.6;
+            font-size: 14px;
         }
 
         .project-needs {
-            background: #212a33;
-            padding: 12px;
-            border-radius: 10px;
-            margin-bottom: 15px;
+            background: rgba(15, 23, 42, 0.4);
+            padding: 12px 14px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            border: 1px solid rgba(168, 85, 247, 0.1);
         }
 
         .project-needs strong {
             display: block;
-            margin-bottom: 5px;
-            color: #cdeeea;
+            margin-bottom: 8px;
+            color: #cbd5e1;
+            font-weight: 700;
+            font-size: 13px;
         }
 
         .needs-list {
             display: flex;
             flex-wrap: wrap;
-            gap: 5px;
+            gap: 6px;
         }
 
         .need-tag {
-            background: #103f42;
-            color: #a3f4ef;
+            background: rgba(168, 85, 247, 0.15);
+            color: #c4b5fd;
             padding: 4px 10px;
-            border-radius: 5px;
+            border-radius: 6px;
             font-size: 12px;
+            font-weight: 600;
         }
 
         .project-author {
-            color: #999;
-            font-size: 12px;
-            margin-bottom: 10px;
+            color: #94a3b8;
+            font-size: 13px;
+            margin-bottom: 12px;
         }
 
         .project-stats {
             display: flex;
-            gap: 15px;
-            padding-top: 15px;
-            border-top: 1px solid #eee;
-            color: #666;
+            gap: 16px;
+            padding-top: 14px;
+            border-top: 1px solid rgba(168, 85, 247, 0.1);
+            color: #cbd5e1;
             font-size: 13px;
         }
 
@@ -407,86 +517,94 @@
 
         /* DETAIL VIEW */
         .detail-view {
-            background: #1f272f;
-            border-radius: 14px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(168, 85, 247, 0.05));
+            border-radius: 20px;
+            padding: 36px;
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(168, 85, 247, 0.12);
+            backdrop-filter: blur(16px);
         }
 
         .detail-header {
-            border-bottom: 2px solid #eee;
-            padding-bottom: 20px;
-            margin-bottom: 20px;
+            border-bottom: 2px solid rgba(168, 85, 247, 0.15);
+            padding-bottom: 22px;
+            margin-bottom: 24px;
         }
 
         .detail-header h1 {
-            color: #e5fbf8;
-            margin-bottom: 10px;
+            color: #f1f5f9;
+            margin-bottom: 12px;
+            font-size: 32px;
+            font-weight: 800;
         }
 
         .detail-meta {
             display: flex;
-            gap: 15px;
+            gap: 18px;
             flex-wrap: wrap;
-            color: #b2f7f1;
+            color: #cbd5e1;
             font-size: 14px;
         }
 
         .ideas-section {
-            margin-top: 30px;
+            margin-top: 32px;
         }
 
         .ideas-section h3 {
-            color: #333;
-            margin-bottom: 15px;
+            color: #f1f5f9;
+            margin-bottom: 18px;
             display: flex;
             align-items: center;
             gap: 10px;
+            font-size: 18px;
+            font-weight: 700;
         }
 
         .idea-item {
-            background: #202a33;
-            padding: 16px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            border-left: 4px solid #1abc9c;
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.08), rgba(59, 130, 246, 0.05));
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 16px;
+            border: 1px solid rgba(168, 85, 247, 0.18);
+            backdrop-filter: blur(12px);
+            transition: all 0.3s ease;
+        }
+
+        .idea-item:hover {
+            border-color: rgba(168, 85, 247, 0.3);
+            box-shadow: 0 8px 24px rgba(168, 85, 247, 0.15);
         }
 
         .idea-header {
             display: flex;
             justify-content: space-between;
-            align-items: start;
+            align-items: flex-start;
+            gap: 20px;
             margin-bottom: 10px;
         }
 
         .idea-title {
-            font-weight: 600;
-            color: #333;
-        }
-
-        .idea-upvotes {
-            background: white;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 13px;
-            color: #667eea;
-            font-weight: 600;
+            font-weight: 700;
+            color: #f1f5f9;
+            font-size: 16px;
         }
 
         .idea-description {
-            color: #c4e9e6;
+            color: #cbd5e1;
             margin-bottom: 10px;
+            line-height: 1.5;
+            font-size: 14px;
         }
 
         .idea-author {
-            color: #999;
-            font-size: 12px;
+            color: #94a3b8;
+            font-size: 13px;
         }
 
         .empty-state {
             text-align: center;
-            padding: 40px 20px;
-            color: #999;
+            padding: 48px 20px;
+            color: #94a3b8;
         }
 
         /* RESPONSIVE */
@@ -678,6 +796,7 @@
 <script>
     // ============= DATA =============
     let projects = [];
+    let voteHistory = {};
     let currentProjectId = null;
     const baseCategories = [
         { value: 'programming', label: '👨‍💻 Programování' },
@@ -778,10 +897,33 @@
             ];
             saveData();
         }
+        loadVoteHistory();
     }
 
     function saveData() {
         localStorage.setItem('projectHubData', JSON.stringify(projects));
+    }
+
+    function loadVoteHistory() {
+        const saved = localStorage.getItem('projectHubVoteHistory');
+        voteHistory = saved ? JSON.parse(saved) : {};
+    }
+
+    function saveVoteHistory() {
+        localStorage.setItem('projectHubVoteHistory', JSON.stringify(voteHistory));
+    }
+
+    function getVoteKey(projectId, ideaId) {
+        return `${projectId}-${ideaId}`;
+    }
+
+    function hasVoted(projectId, ideaId) {
+        return !!voteHistory[getVoteKey(projectId, ideaId)];
+    }
+
+    function setVoted(projectId, ideaId) {
+        voteHistory[getVoteKey(projectId, ideaId)] = true;
+        saveVoteHistory();
     }
 
     // ============= UI =============
@@ -872,21 +1014,23 @@
                     ` : `
                         ${project.ideas
                             .sort((a, b) => b.upvotes - a.upvotes)
-                            .map(idea => `
-                            <div class="idea-item">
-                                <div class="idea-header">
-                                    <div>
-                                        <div class="idea-title">${idea.title}</div>
-                                        <div class="idea-description">${idea.desc}</div>
-                                        <div class="idea-author">💬 ${idea.author}${idea.reported ? ' <span class="badge-reported">Nahlášeno</span>' : ''}</div>
-                                    </div>
-                                    <div style="display: flex; flex-direction: column; gap: 8px; align-items: flex-end;">
-                                        <button class="btn-upvote" onclick="upvoteIdea(${project.id}, ${idea.id})">⬆️ ${idea.upvotes}</button>
-                                        <button class="btn-secondary btn-small" onclick="reportIdea(${project.id}, ${idea.id})">Nahlásit</button>
+                            .map(idea => {
+                                const voted = hasVoted(project.id, idea.id);
+                                return `
+                                <div class="idea-item">
+                                    <div class="idea-header">
+                                        <div>
+                                            <div class="idea-title">${idea.title}</div>
+                                            <div class="idea-description">${idea.desc}</div>
+                                            <div class="idea-author">💬 ${idea.author}${idea.reported ? ' <span class="badge-reported">Nahlášeno</span>' : ''}${voted ? ' • <strong style="color: #8be1ff;">Už jsi hlasoval</strong>' : ''}</div>
+                                        </div>
+                                        <div style="display: flex; flex-direction: column; gap: 10px; align-items: flex-end;">
+                                            <button class="btn-upvote ${voted ? 'disabled' : ''}" ${voted ? 'disabled' : `onclick="upvoteIdea(${project.id}, ${idea.id})"`}>${voted ? 'Už hlasováno ⬆️' : '⬆️'} ${idea.upvotes}</button>
+                                            <button class="btn-secondary btn-small" onclick="reportIdea(${project.id}, ${idea.id})">Nahlásit</button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        `).join('')}
+                            `}).join('')}
                     `}
                     
                     <button class="btn-primary" style="margin-top: 15px; width: 100%;" onclick="openAddIdeaModal(${project.id})">+ Přidej svůj nápady</button>
@@ -1020,13 +1164,19 @@
     }
 
     function upvoteIdea(projectId, ideaId) {
+        if (hasVoted(projectId, ideaId)) {
+            alert('Už jsi na tento nápad hlasoval.');
+            return;
+        }
+
         const project = projects.find(p => p.id === projectId);
         if (!project) return;
-        
+
         const idea = project.ideas.find(i => i.id === ideaId);
         if (!idea) return;
-        
+
         idea.upvotes++;
+        setVoted(projectId, ideaId);
         saveData();
         showProjectDetail(projectId);
     }
